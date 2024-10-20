@@ -72,40 +72,101 @@ footer {
     width: 100%;
 }
 
-.comment-form {
-    margin-top: 40px;
-}
-
-.comment-form form {
+form {
+    padding-top: 30px;
     display: flex;
     flex-direction: column;
 }
 
-.comment-form label {
-    margin-bottom: 5px;
-    font-weight: bold;
-    font-size: 1.25rem;
 
-}
 
-.comment-form input, .comment-form textarea {
+textarea {
     padding: 10px;
     margin-bottom: 15px;
-    border: 1px solid #ddd;
+    border: 1px solid #dddddd;
     border-radius: 5px;
     resize: vertical;
 }
 
-.comment-form button {
-    padding: 10px 15px;
-    background-color: #333;
+
+
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+}
+
+.login-box {
+    background-color: white;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 300px;
+    text-align: center;
+}
+
+.login-box h2 {
+    margin-bottom: 20px;
+    color: #333333;
+    font-size: 2rem;
+}
+
+.form-group {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+label {
+    font-size: 1.5rem;
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #555555;
+}
+
+input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #dddddd;
+    border-radius: 5px;
+    font-size: 1rem;
+    box-sizing: border-box;
+}
+
+input:focus {
+    outline: none;
+    border-color: #333333;
+}
+
+button {
+    width: 100%;
+    padding: 10px;
+    background-color: #333333;
     color: white;
     border: none;
     border-radius: 5px;
+    font-size: 1rem;
     cursor: pointer;
-    transition: background-color 0.2s;
+    transition: background-color 0.2s
 }
 
-.comment-form button:hover {
+
+button:hover {
     background-color: #555;
+}
+
+.form-footer {
+    margin-top: 20px;
+    font-size: 0.9rem;
+}
+
+.form-footer a {
+    color: #333333;
+    text-decoration: none;
+}
+
+.form-footer a:hover {
+    text-decoration: underline;
 }
