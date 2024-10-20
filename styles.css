@@ -49,7 +49,7 @@ article {
     transition: background-color 0.2s, box-shadow 0.2s;
 }
 
-article:hover {
+a article:hover {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
     background-color: #bdbdbd;
 }
@@ -70,4 +70,42 @@ footer {
     position: fixed;
     bottom: 0;
     width: 100%;
+}
+
+.comment-form {
+    margin-top: 40px;
+}
+
+.comment-form form {
+    display: flex;
+    flex-direction: column;
+}
+
+.comment-form label {
+    margin-bottom: 5px;
+    font-weight: bold;
+    font-size: 1.25rem;
+
+}
+
+.comment-form input, .comment-form textarea {
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    resize: vertical;
+}
+
+.comment-form button {
+    padding: 10px 15px;
+    background-color: #333;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.comment-form button:hover {
+    background-color: #555;
 }
