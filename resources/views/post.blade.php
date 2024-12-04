@@ -4,49 +4,80 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>A Blog</title>
-    <link rel="stylesheet" type="text/css" href="{{ url('/css/style.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{asset('css/style.css?v=').time()}}">
 </head>
 <body>
 
 <header>
     <h1>Name of a blog</h1>
     <nav>
-        <a href="index.html">Home</a>
-        <a href="login.html">Log in</a>
+        <a href="/">Home</a>
+        @auth
+            <a href="{{ route('logout') }}"
+               onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">
+                Log out
+            </a>
+
+            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                @csrf
+            </form>
+            <p>Logged in as: {{ Auth::user()->name }}</p>
+        @else
+            <a href="/login">Log in</a>
+            <a href="/register">Register</a>
+        @endauth
     </nav>
 </header>
 
 
-<main class="container">
-    <article class="blog-post-full">
-        <h2>Post title</h2>
-        <p class="meta">Published <strong>October 20th 2024</strong></p>
+<main>
+    <article>
+        <h2>
+            <span class="post-title">{{ $post->title }}</span>
+            <span class="post-author">by {{ $post->user->name }}</span>
+        </h2>
+        <p class="meta">Published <strong>{{ $post->created_at->format('F j, Y, H:i') }}</strong></p>
+        @if ($post->updated_at > $post->created_at)
+            <p class="meta">Edited <strong>{{ $post->updated_at->format('F j, Y, H:i') }}</strong></p>
+        @endif
 
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque at tortor lorem. Praesent sed diam nec risus convallis varius. Suspendisse potenti.</p>
-        <p>Curabitur a orci quis justo bibendum tempus. Donec vehicula, lectus sed suscipit cursus, neque nunc fermentum eros, et maximus arcu nulla eu urna. Duis suscipit, tortor id efficitur fringilla, nunc nunc dignissim odio, at vehicula eros nulla id est.</p>
-        <p>Ut ultrices purus sed felis commodo, a viverra ex dictum. Aliquam erat volutpat. Suspendisse aliquet lacus nec tempor dictum. Etiam lacinia ipsum vel augue aliquet, vel varius nunc vehicula. Donec vitae nunc metus. Phasellus ultricies feugiat quam sit amet vulputate. </p>
+        <p>{{ $post->body }}</p>
 
     </article>
 
+    @if(Auth::id() === $post->user_id)
+        <div>
+            <a href="{{ route('posts.edit', $post) }}">
+                <button style="background-color: blue; color: white;">Edit</button>
+            </a>
 
-    <section class="comments">
+            <form action="{{ route('posts.destroy', $post) }}" method="POST" style="display:inline;">
+                @csrf
+                @method('DELETE')
+                <button type="submit" style="background-color: red; color: white;">Delete</button>
+            </form>
+        </div>
+    @endif
+
+
+    <section>
         <h3>Comments</h3>
 
 
-        <div class="comment">
+        <div>
             <p><strong>John Smith</strong> - October 20th 2024 15:34</p>
             <p>An interesting comment.</p>
         </div>
 
 
-        <div class="comment">
+        <div>
             <p><strong>Jane Doe</strong> - October 20th 2024 16:22</p>
             <p>Another interesting comment</p>
         </div>
 
 
-        <div class="comment-form">
-
+        <div>
             <form action="#" method="post">
                 <label for="comment">Add a comment</label>
                 <textarea id="comment" name="comment" rows="5" required></textarea>

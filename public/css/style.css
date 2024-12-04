@@ -73,9 +73,12 @@ footer {
 }
 
 form {
-    padding-top: 30px;
+    max-width: 800px; /* Adjust this to the desired width of the form */
+    width: 100%; /* Ensure the form takes up the full width of its parent */
+    margin: 0 auto; /* Center the form on the page */
     display: flex;
     flex-direction: column;
+    box-sizing: border-box;
 }
 
 
@@ -86,6 +89,8 @@ textarea {
     border: 1px solid #dddddd;
     border-radius: 5px;
     resize: vertical;
+    width: 100%; /* Makes it stretch to the full width of the parent */
+    box-sizing: border-box; /* Includes padding and border in the width */
 }
 
 
@@ -143,6 +148,7 @@ input:focus {
 button {
     width: 100%;
     padding: 10px;
+    margin: 10px;
     background-color: #333333;
     color: white;
     border: none;
@@ -170,3 +176,16 @@ button:hover {
 .form-footer a:hover {
     text-decoration: underline;
 }
+
+.post-title {
+    font-weight: bold;
+    font-size: 2rem;
+}
+
+.post-author {
+    font-style: italic;
+    font-size: 1rem;
+    color: #555;
+    margin-left: 10px;
+}
+
