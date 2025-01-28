@@ -64,27 +64,48 @@
     <section>
         <h3>Comments</h3>
 
+        <script>
+            function confirmDelete(commentId) {
+                if (confirm('Are you sure you want to delete this comment?')) {
+                    document.getElementById('delete-comment-' + commentId).submit();
+                }
+            }
+        </script>
+        @foreach ($post->comments()->orderBy('created_at', 'desc')->get() as $comment)
+            <div class="comment">
+                <p>
+                    <strong>{{ $comment->user->name }}</strong> <small>{{ $comment->created_at->format('d.m.Y H:i') }}</small>
+                    @if (auth()->id() === $comment->user_id)
+                        <a href="#" onclick="event.preventDefault(); confirmDelete({{ $comment->id }});">
+                            Delete
+                        </a>
 
+                        <form id="delete-comment-{{ $comment->id }}"
+                              action="{{ route('comments.destroy', $comment->id) }}"
+                              method="POST"
+                              style="display: none;">
+                            @csrf
+                            @method('DELETE')
+                        </form>
+                    @endif
+                </p>
+                <p>{{ $comment->body }}</p>
+            </div>
+        @endforeach
+
+        @auth
         <div>
-            <p><strong>John Smith</strong> - October 20th 2024 15:34</p>
-            <p>An interesting comment.</p>
-        </div>
-
-
-        <div>
-            <p><strong>Jane Doe</strong> - October 20th 2024 16:22</p>
-            <p>Another interesting comment</p>
-        </div>
-
-
-        <div>
-            <form action="#" method="post">
-                <label for="comment">Add a comment</label>
-                <textarea id="comment" name="comment" rows="5" required></textarea>
+            <form action="{{ route('comments.store', $post->id) }}" method="post">
+                @csrf
+                <label for="body">Add a comment</label>
+                <textarea id="body" name="body" rows="5" required></textarea>
 
                 <button type="submit">Send</button>
             </form>
         </div>
+        @else
+            <p>Log in to add a comment.</p>
+        @endauth
     </section>
 </main>
 
