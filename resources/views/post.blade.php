@@ -37,7 +37,7 @@
     <article>
         <h2>
             <span class="post-title">{{ $post->title }}</span>
-            <span class="post-author">by {{ $post->user->name }}</span>
+            <span class="post-author">by <a href="{{ route('user.profile', $post->user->id) }}">{{ $post->user->name }}</a></span>
         </h2>
         <p class="meta">Published <strong>{{ $post->created_at->format('F j, Y, H:i') }}</strong></p>
         @if ($post->updated_at > $post->created_at)
@@ -75,7 +75,21 @@
 
 
     <section>
-        <h3>Comments</h3>
+        <h2>Comments</h2>
+
+        @auth
+            <div>
+                <form action="{{ route('comments.store', $post->id) }}" method="post">
+                    @csrf
+                    <label for="body">Add a comment</label>
+                    <textarea id="body" name="body" rows="5" required></textarea>
+
+                    <button type="submit">Send</button>
+                </form>
+            </div>
+        @else
+            <p>Log in to add a comment.</p>
+        @endauth
 
         @foreach ($post->comments()->orderBy('created_at', 'desc')->get() as $comment)
             <div class="comment">
@@ -98,20 +112,6 @@
                 <p>{{ $comment->body }}</p>
             </div>
         @endforeach
-
-        @auth
-        <div>
-            <form action="{{ route('comments.store', $post->id) }}" method="post">
-                @csrf
-                <label for="body">Add a comment</label>
-                <textarea id="body" name="body" rows="5" required></textarea>
-
-                <button type="submit">Send</button>
-            </form>
-        </div>
-        @else
-            <p>Log in to add a comment.</p>
-        @endauth
     </section>
 </main>
 

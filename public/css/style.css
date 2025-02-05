@@ -124,7 +124,7 @@ textarea {
 }
 
 label {
-    font-size: 1.5rem;
+    font-size: 1.2rem;
     display: block;
     font-weight: bold;
     margin-bottom: 5px;
@@ -213,4 +213,17 @@ button:hover {
     color: #555;
     margin-left: 10px;
 }
+
+ul {
+    list-style: none;
+    padding: 0;
+}
+
+li {
+    background: #f4f4f4;
+    margin: 5px 0;
+    padding: 10px;
+    border-radius: 5px;
+}
+
 

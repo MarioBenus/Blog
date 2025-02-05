@@ -3,6 +3,7 @@
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\LikeController;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -27,6 +28,9 @@ Route::get('/posts/{post}', [PostController::class, 'show'])->name('posts.show')
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/user/{id}', [UserController::class, 'show'])->name('user.profile');
+
+
 
 Route::middleware('auth')->group(function() {
     Route::get('/posts/create', [PostController::class, 'create'])->name('posts.create');
