@@ -49,7 +49,6 @@
                             <span class="post-title">{{ Str::limit($post->title, 40) }}</span>
                             <span class="post-author">by {{ $post->user->name }}</span>
                         </h2>
-
                         <p>{{ Str::limit($post->body, 80) }}</p>
                     </article>
                 </a>

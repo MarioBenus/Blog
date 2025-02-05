@@ -3,8 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>A Blog</title>
     <link rel="stylesheet" type="text/css" href="{{asset('css/style.css?v=').time()}}">
+    <script src="{{ asset('js/app.js') }}"></script>
 </head>
 <body>
 
@@ -44,6 +46,17 @@
 
         <p>{{ $post->body }}</p>
 
+        @auth
+            <button
+                class="like-button"
+                data-post-id="{{ $post->id }}"
+                data-liked="{{ $post->isLikedBy(auth()->user()) ? 'true' : 'false' }}">
+                ❤️ <span class="like-count">{{ $post->likes->count() }}</span>
+            </button>
+        @else
+            <p>❤️ {{ $post->likes->count() }}</p>
+        @endauth
+
     </article>
 
     @if(Auth::id() === $post->user_id)
@@ -64,19 +77,12 @@
     <section>
         <h3>Comments</h3>
 
-        <script>
-            function confirmDelete(commentId) {
-                if (confirm('Are you sure you want to delete this comment?')) {
-                    document.getElementById('delete-comment-' + commentId).submit();
-                }
-            }
-        </script>
         @foreach ($post->comments()->orderBy('created_at', 'desc')->get() as $comment)
             <div class="comment">
                 <p>
                     <strong>{{ $comment->user->name }}</strong> <small>{{ $comment->created_at->format('d.m.Y H:i') }}</small>
                     @if (auth()->id() === $comment->user_id)
-                        <a href="#" onclick="event.preventDefault(); confirmDelete({{ $comment->id }});">
+                        <a href="#" class="delete-comment" data-form-id="delete-comment-{{ $comment->id }}">
                             Delete
                         </a>
 

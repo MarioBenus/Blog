@@ -163,6 +163,31 @@ button:hover {
     background-color: #555;
 }
 
+.like-button {
+    width: 10%;
+    align-items: center;
+    gap: 8px; /* Space between the icon and count */
+    padding: 8px 16px;
+    background-color: #f4f4f4;
+    border: 2px solid #ddd;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+    font-weight: bold;
+    color: #555;
+    user-select: none;
+}
+
+.like-button:hover {
+    background-color: #e0e0e0;
+}
+
+.like-button.liked {
+    background-color: #ffb9b9;
+    color: #e74c3c;
+    border-color: #e74c3c;
+}
+
 .form-footer {
     margin-top: 20px;
     font-size: 0.9rem;
