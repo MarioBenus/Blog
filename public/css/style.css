@@ -34,6 +34,10 @@ main {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
+h1 {
+    font-size: 35px;
+}
+
 h2 {
     color: #333333;
 }
@@ -220,7 +224,7 @@ ul {
 }
 
 li, tr, td, th {
-    background: #f4f4f4;
+    background: #c5c4c4;
     margin: 5px 0;
     padding: 10px;
     border-radius: 5px;

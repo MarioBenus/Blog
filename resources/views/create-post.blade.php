@@ -14,7 +14,7 @@
 
                 <div>
                     <label for="body">Post Content</label>
-                    <textarea id="body" name="body" rows="10" required></textarea>
+                    <textarea id="body" name="body" rows="30" required></textarea>
                 </div>
 
                 <button type="submit">Create Post</button>

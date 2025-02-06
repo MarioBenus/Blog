@@ -11,7 +11,7 @@
             <p class="meta">Edited <strong>{{ $post->updated_at->format('F j, Y, H:i') }}</strong></p>
         @endif
 
-        <p>{{ $post->body }}</p>
+        <p>{!! Str::markdown($post->body) !!}</p>
 
         @auth
             <button

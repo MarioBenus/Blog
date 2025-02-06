@@ -12,7 +12,7 @@
 
         <div class="form-group">
             <label for="body">Post Content</label>
-            <textarea name="body" id="body" rows="5" required>{{ old('body', $post->body) }}</textarea>
+            <textarea name="body" id="body" rows="30" required>{{ old('body', $post->body) }}</textarea>
         </div>
 
         <button type="submit" style="background-color: blue; color:white">Update Post</button>
