@@ -11,7 +11,7 @@
             <p class="meta">Edited <strong>{{ $post->updated_at->format('F j, Y, H:i') }}</strong></p>
         @endif
 
-        <p>{!! Str::markdown($post->body) !!}</p>
+        <p>{!! Str::markdown(strip_tags($post->body)) !!}</p>
 
         @auth
             <button
@@ -79,7 +79,7 @@
                         </form>
                     @endif
                 </p>
-                <p>{{ $comment->body }}</p>
+                <p>{!! Str::markdown(strip_tags($comment->body)) !!}</p>
             </div>
         @endforeach
     </section>
