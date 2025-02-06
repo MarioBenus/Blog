@@ -76,6 +76,7 @@ footer {
     width: 100%;
 }
 
+/* Assistance from ChatGPT */
 form {
     max-width: 800px; /* Adjust this to the desired width of the form */
     width: 100%; /* Ensure the form takes up the full width of its parent */
@@ -85,8 +86,7 @@ form {
     box-sizing: border-box;
 }
 
-
-
+/* Assistance from ChatGPT */
 textarea {
     padding: 10px;
     margin-bottom: 15px;
@@ -167,6 +167,7 @@ button:hover {
     background-color: #555;
 }
 
+/* Assistance from ChatGPT */
 .like-button {
     width: 10%;
     align-items: center;

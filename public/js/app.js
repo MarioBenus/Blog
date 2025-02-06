@@ -51,7 +51,6 @@ document.addEventListener("DOMContentLoaded", function () {
             select.addEventListener("change", function () {
                 let userId = this.getAttribute("data-user-id");
                 let roleId = this.value;
-                // let status = this.parentElement.nextElementSibling.querySelector(".status");
 
                 fetch(`/admin/users/${userId}/role`, {
                     method: "POST",
