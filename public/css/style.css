@@ -219,11 +219,19 @@ ul {
     padding: 0;
 }
 
-li {
+li, tr, td, th {
     background: #f4f4f4;
     margin: 5px 0;
     padding: 10px;
     border-radius: 5px;
+}
+
+table {
+    width: 100%;
+}
+
+select {
+    width: 100%;
 }
 
 

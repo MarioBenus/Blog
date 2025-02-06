@@ -1,39 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>A Blog</title>
-    <link rel="stylesheet" type="text/css" href="{{asset('css/style.css?v=').time()}}">
-    <script src="{{ asset('js/app.js') }}"></script>
-</head>
-<body>
+@extends('app')
 
-<header>
-    <h1>Name of a blog</h1>
-    <nav>
-        <a href="/">Home</a>
-        @auth
-            <a href="{{ route('logout') }}"
-               onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                Log out
-            </a>
-
-            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                @csrf
-            </form>
-            <p>Logged in as: {{ Auth::user()->name }}</p>
-        @else
-            <a href="/login">Log in</a>
-            <a href="/register">Register</a>
-        @endauth
-    </nav>
-</header>
-
-
-<main>
+@section('content')
     <article>
         <h2>
             <span class="post-title">{{ $post->title }}</span>
@@ -64,7 +31,10 @@
             <a href="{{ route('posts.edit', $post) }}">
                 <button style="background-color: blue; color: white;">Edit</button>
             </a>
-
+        </div>
+    @endif
+    @if(Auth::id() === $post->user_id || (auth()->check() && auth()->user()->role === 'admin'))
+        <div>
             <form action="{{ route('posts.destroy', $post) }}" method="POST" style="display:inline;">
                 @csrf
                 @method('DELETE')
@@ -95,7 +65,7 @@
             <div class="comment">
                 <p>
                     <strong>{{ $comment->user->name }}</strong> <small>{{ $comment->created_at->format('d.m.Y H:i') }}</small>
-                    @if (auth()->id() === $comment->user_id)
+                    @if (auth()->id() === $comment->user_id || (auth()->check() && auth()->user()->role === 'admin'))
                         <a href="#" class="delete-comment" data-form-id="delete-comment-{{ $comment->id }}">
                             Delete
                         </a>
@@ -113,10 +83,4 @@
             </div>
         @endforeach
     </section>
-</main>
-
-<footer>
-    <p>&copy; 2024 Author</p>
-</footer>
-</body>
-</html>
+@endsection

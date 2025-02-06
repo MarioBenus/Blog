@@ -29,7 +29,7 @@ class CommentController extends Controller
 
     public function destroy(Comment $comment)
     {
-        if (auth()->id() !== $comment->user_id) {
+        if (auth()->id() !== $comment->user_id && auth()->user()->role !== 'admin') {
             abort(403, 'Unauthorized action.');
         }
 

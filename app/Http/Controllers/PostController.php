@@ -26,6 +26,9 @@ class PostController extends Controller
         if (!Auth::check()) {
             return redirect()->route('login')->with('error', 'You must be logged in to create a post.');
         }
+        if (auth()->user()->role === 'commenter') {
+            return redirect()->route('login')->with('error', 'You don\'t have permissions to create a post.');
+        }
         return view('/create-post');
     }
 
@@ -34,7 +37,9 @@ class PostController extends Controller
         if (!Auth::check()) {
             return redirect()->route('login')->with('error', 'You must be logged in to create a post.');
         }
-
+        if (auth()->user()->role === 'commenter') {
+            return redirect()->route('login')->with('error', 'You don\'t have permissions to create a post.');
+        }
 
         $validated = $request->validate([
             'title' => 'required|max:60',
@@ -55,7 +60,6 @@ class PostController extends Controller
     public function edit(Post $post)
     {
         if (Auth::id() !== $post->user_id) {
-            // If the user is not the owner, redirect or abort
             return redirect('/')->with('error', 'You are not authorized to delete this post.');
         }
 
@@ -66,11 +70,9 @@ class PostController extends Controller
     public function update(Request $request, Post $post)
     {
         if (Auth::id() !== $post->user_id) {
-            // If the user is not the owner, redirect
             return redirect('/')->with('error', 'You are not authorized to delete this post.');
         }
 
-        // Validate input
         $request->validate([
             'title' => 'required|max:60',
             'body' => 'required',
@@ -82,21 +84,18 @@ class PostController extends Controller
             'body' => $request->body,
         ]);
 
-        // Redirect back to the post with a success message
         return redirect()->route('posts.show', $post)->with('success', 'Post updated successfully!');
     }
 
 
     public function destroy(Post $post)
     {
-        if (Auth::id() !== $post->user_id) {
-            // If the user is not the owner, redirect or abort
+        if (Auth::id() !== $post->user_id && auth()->user()->role !== 'admin') {
             return redirect('/')->with('error', 'You are not authorized to delete this post.');
         }
 
         $post->delete();
 
-        // Redirect to homepage with a success message
         return redirect('/')->with('success', 'Post deleted successfully!');
     }
 }

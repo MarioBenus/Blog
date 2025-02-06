@@ -1,42 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>A Blog</title>
-    <link rel="stylesheet" type="text/css" href="{{ url('/css/style.css') }}" />
-</head>
-<body>
-<header>
-    <h1>Name of a blog</h1>
-    <nav>
-        <a href="/">Home</a>
-        @auth
-            <a href="{{ route('logout') }}"
-               onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                Log out
-            </a>
+@extends('app')
 
-            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                @csrf
-            </form>
-            <p>Logged in as: {{ Auth::user()->name }}</p>
-        @else
-            <a href="/login">Log in</a>
-            <a href="/register">Register</a>
-        @endauth
-    </nav>
-</header>
-
-<main>
+@section('content')
     <section class="posts">
-        @auth
-            <!-- Button to create a new post, visible only to authenticated users -->
+        @if(auth()->check() && (auth()->user()->role === 'blogger' || auth()->user()->role === 'admin'))
             <a href="/create-post">
                 <button >Create New Post</button>
             </a>
-        @endauth
+        @endif
         <h2>Newest posts</h2>
 
         @if($posts->isEmpty())
@@ -54,12 +24,6 @@
                 </a>
             @endforeach
         @endif
-
     </section>
-</main>
+@endsection
 
-<footer>
-    <p>&copy; 2024 Author</p>
-</footer>
-</body>
-</html>

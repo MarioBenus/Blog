@@ -37,11 +37,56 @@ document.addEventListener('DOMContentLoaded', function() {
                 .then(response => response.json())
                 .then(data => {
                     likeCountElement.textContent = data.likes;
-                    this.classList.toggle('liked', data.liked); // Toggle the liked class
+                    this.classList.toggle('liked', data.liked);
                 })
                 .catch(error => console.error('Error:', error));
         });
     });
 });
 
+// User search and management
+document.addEventListener("DOMContentLoaded", function () {
+    function attachRoleChangeListeners() {
+        document.querySelectorAll(".role-select").forEach(select => {
+            select.addEventListener("change", function () {
+                let userId = this.getAttribute("data-user-id");
+                let roleId = this.value;
+                // let status = this.parentElement.nextElementSibling.querySelector(".status");
 
+                fetch(`/admin/users/${userId}/role`, {
+                    method: "POST",
+                    headers: {
+                        "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]').getAttribute("content"),
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({ role_id: roleId }),
+                })
+            });
+        });
+    }
+
+    attachRoleChangeListeners();
+
+    const searchInput = document.getElementById('search');
+
+    searchInput.addEventListener('keyup', function() {
+        const query = searchInput.value;
+
+        fetch('/admin/users/search?query=' + query)
+            .then(response => response.text())
+            .then(data => {
+                const tbody = document.querySelector('#user-table tbody');
+                tbody.innerHTML = data;
+                attachRoleChangeListeners();
+            })
+            .catch(error => {
+                console.error('Error fetching data:', error);
+            });
+    });
+});
+
+// Clear search bar after a reload
+document.addEventListener("DOMContentLoaded", function () {
+    const searchInput = document.getElementById('search');
+    searchInput.value = '';
+});
