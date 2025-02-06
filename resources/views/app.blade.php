@@ -10,9 +10,9 @@
 </head>
 <body>
 
-@if (session('success'))
-    <div class="popup success">
-        <p>{{ session('success') }}</p>
+@if (session('success') || session('error'))
+    <div id="popup-message" class="popup {{ session('success') ? 'success' : 'error' }}">
+        {{ session('success') ?? session('error') }}
     </div>
 @endif
 

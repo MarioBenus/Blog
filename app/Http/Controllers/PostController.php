@@ -46,6 +46,16 @@ class PostController extends Controller
             'body' => 'required',
         ]);
 
+        $strippedTitle = strip_tags($request->input('title'));
+        if (strlen($strippedTitle) === 0) {
+            return back()->with('error', 'The title must have at least 1 character after removing HTML tags.');
+        }
+
+        $strippedBody = strip_tags($request->input('body'));
+        if (strlen($strippedBody) === 0) {
+            return back()->with('error', 'The body must have at least 1 character after removing HTML tags.');
+        }
+
 
         Post::create([
             'title' => $request->title,
@@ -78,6 +88,15 @@ class PostController extends Controller
             'body' => 'required',
         ]);
 
+        $strippedTitle = strip_tags($request->input('title'));
+        if (strlen($strippedTitle) === 0) {
+            return back()->with('error', 'The title must have at least 1 character after removing HTML tags.');
+        }
+
+        $strippedBody = strip_tags($request->input('body'));
+        if (strlen($strippedBody) === 0) {
+            return back()->with('error', 'The body must have at least 1 character after removing HTML tags.');
+        }
 
         $post->update([
             'title' => $request->title,

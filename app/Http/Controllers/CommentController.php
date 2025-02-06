@@ -19,6 +19,11 @@ class CommentController extends Controller
             'body' => 'required|max:500',
         ]);
 
+        $strippedBody = strip_tags($request->input('body'));
+        if (strlen($strippedBody) === 0) {
+            return back()->with('error', 'The comment must have at least 1 character after removing HTML tags.');
+        }
+
         $post->comments()->create([
             'body' => $request->input('body'),
             'user_id' => auth()->id(),
