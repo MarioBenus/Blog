@@ -10,6 +10,22 @@
 </head>
 <body>
 
+@if (session('success'))
+    <div class="popup success">
+        <p>{{ session('success') }}</p>
+    </div>
+@endif
+
+@if ($errors->any())
+    <div class="popup error">
+        @foreach ($errors->all() as $error)
+            <p>{{ $error }}</p>
+        @endforeach
+    </div>
+@endif
+
+
+
 <header>
     <h1>Name of a blog</h1>
     <nav>

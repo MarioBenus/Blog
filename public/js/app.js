@@ -90,3 +90,18 @@ document.addEventListener("DOMContentLoaded", function () {
     const searchInput = document.getElementById('search');
     searchInput.value = '';
 });
+
+document.addEventListener("DOMContentLoaded", function () {
+    let popups = document.querySelectorAll(".popup");
+
+    popups.forEach(popup => {
+        popup.style.display = "block"; // Show popup
+
+        setTimeout(() => {
+            popup.style.animation = "fadeOut 0.5s ease-out";
+            setTimeout(() => popup.style.display = "none", 400); // Hide after fade-out
+        }, 3000);
+    });
+});
+
+
